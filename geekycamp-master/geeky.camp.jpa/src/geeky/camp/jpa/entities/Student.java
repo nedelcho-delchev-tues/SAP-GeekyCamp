@@ -3,10 +3,12 @@ package geeky.camp.jpa.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -25,7 +27,9 @@ public class Student implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 	@ManyToMany
-	private Collection<Course> courses;
+	private List<Course> courses;
+	@ManyToOne
+	private Faculty faculty;
 	private static final long serialVersionUID = 1L;
 
 	public Student() {
@@ -77,6 +81,27 @@ public class Student implements Serializable {
 		this.birthDate = birthDate;
 	}
 
+	public void addCourse(Course course) {
+		this.courses.add(course);
+		if(!(course.getStudents().contains(this))) {
+			course.addStudent(this);
+		}
+	}
+	
+	public List<Course> getCourses() {
+		return courses;
+	}
+	
+	public Faculty getFaculty() {
+		return faculty;
+	}
+	
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
+		if(!(faculty.getStudents().contains(this))) {
+			faculty.addStudent(this);
+		}
+	}
 	
 	@Override
 	public String toString() {

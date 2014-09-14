@@ -78,4 +78,12 @@ public class Course implements Serializable{
     public void setStudents(List<Student> students) {
         this.students = students;
     }
+	
+	public void addStudent(Student student) {
+		students.add(student);
+		if(!(student.getCourses().contains(this))) {
+			student.addCourse(this);
+		}
+	}
+
 }

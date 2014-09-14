@@ -50,4 +50,15 @@ public class Faculty implements Serializable {
 		this.facultyDescription = facultyDescription;
 	}
    
+   public void addStudent(Student student) {
+		students.add(student);
+		if(student.getFaculty() != this) {
+			student.setFaculty(this);
+		}
+	}
+
+	public List<Student> getStudents() {
+		return this.students;
+	}
+   
 }
